@@ -4,13 +4,13 @@ use warnings;
 
 package Test::API;
 # ABSTRACT: Test a list of subroutines provided by a module
-our $VERSION = '0.003'; # VERSION
+our $VERSION = '0.004'; # VERSION
 
-use Devel::Symdump 2.08 ();
 use Symbol ();
 
-use superclass 'Test::Builder::Module' => 0.86;
-our @EXPORT = qw/public_ok import_ok/;
+use Test::Builder::Module 0.86;
+our @ISA    = qw/Test::Builder::Module/;
+our @EXPORT = qw/public_ok import_ok class_api_ok/;
 
 #--------------------------------------------------------------------------#
 
@@ -84,6 +84,32 @@ sub public_ok ($;@) { ## no critic
 
 #--------------------------------------------------------------------------#
 
+sub class_api_ok ($;@) { ## no critic
+    my ( $package, @expected ) = @_;
+    my $tb    = _builder();
+    my $label = "public API for class $package";
+
+    return 0 unless _check_loaded( $package, $label );
+
+    my ( $ok, $missing, $extra ) = _public_ok( $package, @expected );
+
+    # Call ->can to check if missing methods might be provided
+    # by parent classes...
+    if ( !$ok ) {
+        @$missing = grep { not $package->can($_) } @$missing;
+        $ok = not( scalar(@$missing) + scalar(@$extra) );
+    }
+
+    $tb->ok( $ok, $label );
+    if ( !$ok ) {
+        $tb->diag("missing: @$missing") if @$missing;
+        $tb->diag("extra: @$extra")     if @$extra;
+    }
+    return $ok;
+}
+
+#--------------------------------------------------------------------------#
+
 sub _builder {
     return __PACKAGE__->builder;
 }
@@ -122,9 +148,10 @@ sub _difference {
 
 sub _public_fcns {
     my ($package) = @_;
-    my $symbols = Devel::Symdump->new($package);
+    no strict qw(refs);
     return grep { substr( $_, 0, 1 ) ne '_' }
-      map { ( my $f = $_ ) =~ s/^$package\:://; $f } $symbols->functions;
+      map { ( my $f = $_ ) =~ s/^\*$package\:://; $f }
+      grep { defined( *$_{CODE} ) } values( %{"$package\::"} );
 }
 
 #--------------------------------------------------------------------------#
@@ -150,7 +177,7 @@ Test::API - Test a list of subroutines provided by a module
 
 =head1 VERSION
 
-version 0.003
+version 0.004
 
 =head1 SYNOPSIS
 
@@ -158,13 +185,15 @@ version 0.003
     use Test::API;
 
     require_ok( 'My::Package' );
-    
+
     public_ok ( 'My::Package', @names );
-    
+
     import_ok ( 'My::Package',
         export    => [ 'foo', 'bar' ],
-        export_ok => [ 'baz', 'bam' ], 
+        export_ok => [ 'baz', 'bam' ],
     );
+
+    class_api_ok( 'My::Class', @methods );
 
 =head1 DESCRIPTION
 
@@ -186,13 +215,21 @@ C<$package> namespace and that *only* these subroutines are available.  This
 means that subroutines imported from other modules will cause this test to fail
 unless they are explicitly included in C<@names>.
 
+=head2 class_api_ok
+
+  class_api_ok( $class, @names );
+
+A variation of C<public_ok> for object-oriented modules. Allows superclasses
+to fill in "missing" subroutines, but "extra" methods provided by superclasses
+will not cause the test to fail.
+
 =head2 import_ok
 
   import_ok ( $package, %spec );
 
 This function checks that C<$package> correctly exports an expected list of
-subroutines and *only* these subroutines.  The C<%spec> generally follows 
-the style used by [Exporter], but in lower case:  
+subroutines and *only* these subroutines.  The C<%spec> generally follows
+the style used by [Exporter], but in lower case:
 
   %spec = (
     export    => [ 'foo', 'bar' ],  # exported automatically
@@ -234,6 +271,10 @@ L<https://github.com/dagolden/Test-API>
 =head1 AUTHOR
 
 David Golden <dagolden@cpan.org>
+
+=head1 CONTRIBUTOR
+
+Toby Inkster <mail@tobyinkster.co.uk>
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -21,11 +21,9 @@ my %WriteMakefileArgs = (
   "LICENSE" => "apache",
   "NAME" => "Test::API",
   "PREREQ_PM" => {
-    "Devel::Symdump" => "2.08",
     "Symbol" => 0,
     "Test::Builder::Module" => "0.86",
     "strict" => 0,
-    "superclass" => 0,
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
@@ -38,7 +36,7 @@ my %WriteMakefileArgs = (
     "Test::More" => 0,
     "version" => 0
   },
-  "VERSION" => "0.003",
+  "VERSION" => "0.004",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -47,7 +45,6 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Carp" => 0,
-  "Devel::Symdump" => "2.08",
   "Exporter" => 0,
   "ExtUtils::MakeMaker" => 0,
   "File::Spec::Functions" => 0,
@@ -57,7 +54,6 @@ my %FallbackPrereqs = (
   "Test::Builder::Tester" => "1.18",
   "Test::More" => 0,
   "strict" => 0,
-  "superclass" => 0,
   "version" => 0,
   "warnings" => 0
 );

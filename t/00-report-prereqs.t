@@ -65,12 +65,10 @@ my $static_prereqs = do { my $x = {
                     },
        'runtime' => {
                       'requires' => {
-                                      'Devel::Symdump' => '2.08',
                                       'Symbol' => '0',
                                       'Test::Builder::Module' => '0.86',
                                       'perl' => '5.006',
                                       'strict' => '0',
-                                      'superclass' => '0',
                                       'warnings' => '0'
                                     }
                     },

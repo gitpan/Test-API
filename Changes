@@ -1,5 +1,16 @@
 Revision history for Test-API
 
+0.004     2014-03-14 11:43:54+01:00 Europe/Paris
+
+    [ADDED]
+
+    - class_api_ok function tests methods, which may be provided the
+      module tested or a superclass (Toby Inkster)
+
+    [CHANGED]
+
+    - dropped dependencies on superclass and Devel::Symdump (Toby Inkster)
+
 0.003     2014-02-27 06:19:07-05:00 America/New_York
 
     [CHANGED]

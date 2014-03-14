@@ -2,20 +2,22 @@ NAME
     Test::API - Test a list of subroutines provided by a module
 
 VERSION
-    version 0.003
+    version 0.004
 
 SYNOPSIS
         use Test::More tests => 3;
         use Test::API;
 
         require_ok( 'My::Package' );
-    
+
         public_ok ( 'My::Package', @names );
-    
+
         import_ok ( 'My::Package',
             export    => [ 'foo', 'bar' ],
-            export_ok => [ 'baz', 'bam' ], 
+            export_ok => [ 'baz', 'bam' ],
         );
+
+        class_api_ok( 'My::Class', @methods );
 
 DESCRIPTION
     This simple test module checks the subroutines provided by a module.
@@ -33,6 +35,13 @@ USAGE
     within the $package namespace and that *only* these subroutines are
     available. This means that subroutines imported from other modules will
     cause this test to fail unless they are explicitly included in @names.
+
+  class_api_ok
+      class_api_ok( $class, @names );
+
+    A variation of "public_ok" for object-oriented modules. Allows
+    superclasses to fill in "missing" subroutines, but "extra" methods
+    provided by superclasses will not cause the test to fail.
 
   import_ok
       import_ok ( $package, %spec );
@@ -69,6 +78,9 @@ SUPPORT
 
 AUTHOR
     David Golden <dagolden@cpan.org>
+
+CONTRIBUTOR
+    Toby Inkster <mail@tobyinkster.co.uk>
 
 COPYRIGHT AND LICENSE
     This software is Copyright (c) 2014 by David Golden.

@@ -14,9 +14,12 @@ perlcritic.rc
 t/00-report-prereqs.t
 t/02-public.t
 t/03-export.t
+t/04-class-ok.t
+t/lib/Child.pm
 t/lib/Export.pm
 t/lib/ExportComplex.pm
 t/lib/NoSubs.pm
+t/lib/Parent.pm
 t/lib/PvtFoo.pm
 t/lib/SubFoo.pm
 t/lib/UseCarp.pm
