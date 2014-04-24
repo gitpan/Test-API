@@ -4,7 +4,7 @@
       "David Golden <dagolden@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.013, CPAN::Meta::Converter version 2.140640",
+   "generated_by" : "Dist::Zilla version 5.015, CPAN::Meta::Converter version 2.140640",
    "license" : [
       "apache_2_0"
    ],
@@ -32,7 +32,7 @@
       },
       "develop" : {
          "requires" : {
-            "Dist::Zilla" : "5.013",
+            "Dist::Zilla" : "5.015",
             "Dist::Zilla::PluginBundle::DAGOLDEN" : "0.060",
             "File::Spec" : "0",
             "File::Temp" : "0",
@@ -74,7 +74,7 @@
    "provides" : {
       "Test::API" : {
          "file" : "lib/Test/API.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       }
    },
    "release_status" : "stable",
@@ -89,7 +89,7 @@
          "web" : "https://github.com/dagolden/Test-API"
       }
    },
-   "version" : "0.004",
+   "version" : "0.005",
    "x_authority" : "cpan:DAGOLDEN",
    "x_contributors" : [
       "Toby Inkster <mail@tobyinkster.co.uk>"

@@ -14,7 +14,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: '6.17'
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.013, CPAN::Meta::Converter version 2.140640'
+generated_by: 'Dist::Zilla version 5.015, CPAN::Meta::Converter version 2.140640'
 license: apache
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -31,7 +31,7 @@ no_index:
 provides:
   Test::API:
     file: lib/Test/API.pm
-    version: '0.004'
+    version: '0.005'
 requires:
   Symbol: '0'
   Test::Builder::Module: '0.86'
@@ -42,7 +42,7 @@ resources:
   bugtracker: https://github.com/dagolden/Test-API/issues
   homepage: https://github.com/dagolden/Test-API
   repository: https://github.com/dagolden/Test-API.git
-version: '0.004'
+version: '0.005'
 x_authority: cpan:DAGOLDEN
 x_contributors:
   - 'Toby Inkster <mail@tobyinkster.co.uk>'
